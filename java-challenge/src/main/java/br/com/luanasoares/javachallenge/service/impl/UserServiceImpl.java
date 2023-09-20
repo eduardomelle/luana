@@ -1,17 +1,16 @@
 package br.com.luanasoares.javachallenge.service.impl;
 
+import br.com.luanasoares.javachallenge.dto.UserFindAllResponseDto;
 import br.com.luanasoares.javachallenge.model.Role;
 import br.com.luanasoares.javachallenge.model.User;
 import br.com.luanasoares.javachallenge.repository.RoleRepository;
 import br.com.luanasoares.javachallenge.repository.UserRepository;
 import br.com.luanasoares.javachallenge.service.UserService;
 import br.com.luanasoares.javachallenge.util.PasswordUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -43,8 +42,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return this.userRepository.findAll();
+    public List<UserFindAllResponseDto> findAll() {
+        List<UserFindAllResponseDto> userFindAllResponseDtos = new ArrayList<>();
+        this.userRepository.findAll().forEach(user -> {
+            UserFindAllResponseDto userFindAllResponseDto = new UserFindAllResponseDto();
+            BeanUtils.copyProperties(user, userFindAllResponseDto);
+            userFindAllResponseDtos.add(userFindAllResponseDto);
+        });
+        return userFindAllResponseDtos;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package br.com.luanasoares.javachallenge.controller;
 
+import br.com.luanasoares.javachallenge.dto.UserFindAllResponseDto;
 import br.com.luanasoares.javachallenge.dto.UserSaveRequestDto;
 import br.com.luanasoares.javachallenge.dto.UserUpdateRequestDto;
 import br.com.luanasoares.javachallenge.model.User;
@@ -7,6 +8,7 @@ import br.com.luanasoares.javachallenge.service.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,13 +26,20 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<User> save(@RequestBody @Valid UserSaveRequestDto userSaveRequestDto) {
+    public ResponseEntity<Object> save(@RequestBody @Valid UserSaveRequestDto userSaveRequestDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            log.error("UserController -> save(): {}", bindingResult.getAllErrors());
+            StringBuilder stringBuilder = new StringBuilder();
+            bindingResult.getAllErrors().forEach(error -> stringBuilder.append(error.getDefaultMessage()).append(" "));
+            return ResponseEntity.badRequest().body(stringBuilder.toString());
+        }
+
         User user = this.userService.save(userSaveRequestDto.getUsername(), userSaveRequestDto.getPassword());
         return ResponseEntity.ok(user);
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserFindAllResponseDto>> findAll() {
         return ResponseEntity.ok(this.userService.findAll());
     }
 

@@ -1,5 +1,6 @@
 package br.com.luanasoares.javachallenge.service;
 
+import br.com.luanasoares.javachallenge.dto.UserFindAllResponseDto;
 import br.com.luanasoares.javachallenge.model.User;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface UserService {
 
     User save(String username, String password);
 
-    List<User> findAll();
+    List<UserFindAllResponseDto> findAll();
 
     User update(Long id, Set<String> roles);
 

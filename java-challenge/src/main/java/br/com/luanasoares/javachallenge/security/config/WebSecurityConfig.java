@@ -67,6 +67,7 @@ public class WebSecurityConfig {
                 .requestMatchers(antMatcher(HttpMethod.POST, "/api/v1/users")).permitAll()
                 .requestMatchers(antMatcher(HttpMethod.GET, "/api/v1/users")).hasRole("ADMIN")
                 .requestMatchers(antMatcher(HttpMethod.PUT, "/api/v1/users")).hasRole("ADMIN")
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
