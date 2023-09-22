@@ -1,8 +1,10 @@
 package br.com.luanasoares.javachallenge.service.impl;
 
 import br.com.luanasoares.javachallenge.dto.UserFindAllResponseDto;
+import br.com.luanasoares.javachallenge.model.Movie;
 import br.com.luanasoares.javachallenge.model.Role;
 import br.com.luanasoares.javachallenge.model.User;
+import br.com.luanasoares.javachallenge.repository.MovieRepository;
 import br.com.luanasoares.javachallenge.repository.RoleRepository;
 import br.com.luanasoares.javachallenge.repository.UserRepository;
 import br.com.luanasoares.javachallenge.service.UserService;
@@ -19,9 +21,12 @@ public class UserServiceImpl implements UserService {
 
     private final RoleRepository roleRepository;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    private final MovieRepository movieRepository;
+
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, MovieRepository movieRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.movieRepository = movieRepository;
     }
 
     @Override
@@ -68,6 +73,21 @@ public class UserServiceImpl implements UserService {
                 User user = optionalUser.get();
                 user.setRoles(rs);
                 return this.userRepository.save(user);
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public User addFavorite(Long id, Long movieId) {
+        Optional<User> optionalUser = this.userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            Optional<Movie> optionalMovie = this.movieRepository.findById(movieId);
+            if (optionalMovie.isPresent()) {
+                optionalUser.get().getFavorites().add(optionalMovie.get());
+                this.userRepository.save(optionalUser.get());
+                return optionalUser.get();
             }
         }
 

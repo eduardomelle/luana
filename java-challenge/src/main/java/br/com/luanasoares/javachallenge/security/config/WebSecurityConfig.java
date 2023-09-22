@@ -2,7 +2,6 @@ package br.com.luanasoares.javachallenge.security.config;
 
 import br.com.luanasoares.javachallenge.security.JwtAuthenticationEntryPoint;
 import br.com.luanasoares.javachallenge.security.filter.JwtAuthenticationTokenFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -34,13 +32,6 @@ public class WebSecurityConfig {
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.userDetailsService = userDetailsService;
     }
-
-    /*
-    @Autowired
-    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder());
-    }
-     */
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
@@ -67,6 +58,9 @@ public class WebSecurityConfig {
                 .requestMatchers(antMatcher(HttpMethod.POST, "/api/v1/users")).permitAll()
                 .requestMatchers(antMatcher(HttpMethod.GET, "/api/v1/users")).hasRole("ADMIN")
                 .requestMatchers(antMatcher(HttpMethod.PUT, "/api/v1/users")).hasRole("ADMIN")
+                .requestMatchers(antMatcher(HttpMethod.POST, "/api/v1/users/add-favorite")).hasRole("ADMIN")
+                .requestMatchers(antMatcher(HttpMethod.GET, "/api/v1/movies")).hasRole("ADMIN")
+                .requestMatchers(antMatcher(HttpMethod.PUT, "/api/v1/movies/initial-load")).hasRole("ADMIN")
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

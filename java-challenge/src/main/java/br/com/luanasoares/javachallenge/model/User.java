@@ -25,4 +25,7 @@ public class User implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Movie> favorites = new HashSet<>();
+
 }

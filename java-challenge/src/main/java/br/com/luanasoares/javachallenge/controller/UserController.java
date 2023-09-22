@@ -1,5 +1,6 @@
 package br.com.luanasoares.javachallenge.controller;
 
+import br.com.luanasoares.javachallenge.dto.UserAddFavoriteRequestDto;
 import br.com.luanasoares.javachallenge.dto.UserFindAllResponseDto;
 import br.com.luanasoares.javachallenge.dto.UserSaveRequestDto;
 import br.com.luanasoares.javachallenge.dto.UserUpdateRequestDto;
@@ -7,6 +8,7 @@ import br.com.luanasoares.javachallenge.model.User;
 import br.com.luanasoares.javachallenge.service.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +48,11 @@ public class UserController {
     @PutMapping
     public ResponseEntity<User> update(@RequestBody @Valid UserUpdateRequestDto userUpdateRequestDto) {
         return ResponseEntity.ok(this.userService.update(userUpdateRequestDto.getId(), userUpdateRequestDto.getRoles()));
+    }
+
+    @PostMapping("/add-favorite")
+    public ResponseEntity<User> addFavorite(@RequestBody @Valid UserAddFavoriteRequestDto userAddFavoriteRequestDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.addFavorite(userAddFavoriteRequestDto.getUserId(), userAddFavoriteRequestDto.getMovieId()));
     }
 
 }

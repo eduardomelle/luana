@@ -16,4 +16,6 @@ public interface UserService {
 
     User update(Long id, Set<String> roles);
 
+    User addFavorite(Long id, Long movieId);
+
 }
