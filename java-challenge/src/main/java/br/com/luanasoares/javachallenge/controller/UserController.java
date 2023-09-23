@@ -1,9 +1,6 @@
 package br.com.luanasoares.javachallenge.controller;
 
-import br.com.luanasoares.javachallenge.dto.UserAddFavoriteRequestDto;
-import br.com.luanasoares.javachallenge.dto.UserFindAllResponseDto;
-import br.com.luanasoares.javachallenge.dto.UserSaveRequestDto;
-import br.com.luanasoares.javachallenge.dto.UserUpdateRequestDto;
+import br.com.luanasoares.javachallenge.dto.*;
 import br.com.luanasoares.javachallenge.model.User;
 import br.com.luanasoares.javachallenge.service.UserService;
 import jakarta.validation.Valid;
@@ -51,8 +48,18 @@ public class UserController {
     }
 
     @PostMapping("/add-favorite")
-    public ResponseEntity<User> addFavorite(@RequestBody @Valid UserAddFavoriteRequestDto userAddFavoriteRequestDto) {
+    public ResponseEntity<UserAddFavoriteResponsetDto> addFavorite(@RequestBody @Valid UserAddFavoriteRequestDto userAddFavoriteRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.addFavorite(userAddFavoriteRequestDto.getUserId(), userAddFavoriteRequestDto.getMovieId()));
+    }
+
+    @PostMapping("/remove-favorite")
+    public ResponseEntity<UserRemoveFavoriteResponsetDto> addFavorite(@RequestBody @Valid UserRemoveFavoriteRequestDto userRemoveFavoriteRequestDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.removeFavorite(userRemoveFavoriteRequestDto.getUserId(), userRemoveFavoriteRequestDto.getMovieId()));
+    }
+
+    @GetMapping("/{id}/favorites")
+    public ResponseEntity<List<MovieDto>> findFavoritesById(@PathVariable Long id) {
+        return ResponseEntity.ok(this.userService.findFavoritesById(id));
     }
 
 }

@@ -24,4 +24,7 @@ public class Movie implements Serializable {
     @Column(nullable = false)
     private String overview;
 
+    @Column(nullable = false)
+    private Integer star;
+
 }

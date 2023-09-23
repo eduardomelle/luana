@@ -1,6 +1,9 @@
 package br.com.luanasoares.javachallenge.service;
 
+import br.com.luanasoares.javachallenge.dto.MovieDto;
+import br.com.luanasoares.javachallenge.dto.UserAddFavoriteResponsetDto;
 import br.com.luanasoares.javachallenge.dto.UserFindAllResponseDto;
+import br.com.luanasoares.javachallenge.dto.UserRemoveFavoriteResponsetDto;
 import br.com.luanasoares.javachallenge.model.User;
 
 import java.util.List;
@@ -16,6 +19,10 @@ public interface UserService {
 
     User update(Long id, Set<String> roles);
 
-    User addFavorite(Long id, Long movieId);
+    UserAddFavoriteResponsetDto addFavorite(Long id, Long movieId);
+
+    UserRemoveFavoriteResponsetDto removeFavorite(Long id, Long movieId);
+
+    List<MovieDto> findFavoritesById(Long id);
 
 }

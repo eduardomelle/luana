@@ -1,5 +1,6 @@
 package br.com.luanasoares.javachallenge.controller;
 
+import br.com.luanasoares.javachallenge.dto.MovieDto;
 import br.com.luanasoares.javachallenge.model.Movie;
 import br.com.luanasoares.javachallenge.service.MovieService;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,11 @@ public class MovieController {
     @GetMapping
     public ResponseEntity<List<Movie>> findAll() {
         return ResponseEntity.ok(this.movieService.findAll());
+    }
+
+    @GetMapping("/top-10")
+    public ResponseEntity<List<MovieDto>> findByTop() {
+        return ResponseEntity.ok(this.movieService.findByTop());
     }
 
 }
