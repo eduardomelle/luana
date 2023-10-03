@@ -5,10 +5,12 @@ import br.com.luanasoares.javachallenge.dto.UserAddFavoriteResponsetDto;
 import br.com.luanasoares.javachallenge.dto.UserFindAllResponseDto;
 import br.com.luanasoares.javachallenge.dto.UserRemoveFavoriteResponsetDto;
 import br.com.luanasoares.javachallenge.model.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
 
+@Service
 public interface UserService {
 
     User findByUsername(String username);

@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentMap;
 @RequestMapping("/api/v1/movies")
 public class MovieController {
 
+    @Autowired
     public final MovieService movieService;
 
     @Autowired

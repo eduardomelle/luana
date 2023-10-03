@@ -8,12 +8,17 @@ import br.com.luanasoares.javachallenge.model.User;
 import br.com.luanasoares.javachallenge.repository.MovieRepository;
 import br.com.luanasoares.javachallenge.repository.RoleRepository;
 import br.com.luanasoares.javachallenge.repository.UserRepository;
+import br.com.luanasoares.javachallenge.service.MovieService;
 import br.com.luanasoares.javachallenge.util.PasswordUtils;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,6 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 @SpringBootApplication
+@EnableFeignClients
 public class JavaChallengeApplication {
 
 	@Autowired

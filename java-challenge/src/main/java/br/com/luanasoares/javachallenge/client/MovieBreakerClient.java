@@ -7,8 +7,8 @@ import feign.RequestLine;
 import org.springframework.cloud.openfeign.FeignClient;
 
 @Headers("Authorization: {token}")
-@FeignClient(value = "movieClient", url = "https://api.themoviedb.org/3/movie/now_playing")
-public interface MovieClient {
+@FeignClient(value = "movieBreakerClient", url = "https://moviesdatabase.p.rapidapi.com/titles")
+public interface MovieBreakerClient {
 
     @RequestLine("GET ?page={page}")
     NowPlayingResponseDto nowPlaying(@Param("token") String token, @Param("page") Integer page);
